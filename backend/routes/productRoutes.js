@@ -1,8 +1,8 @@
 import express from 'express'
 import asyncHandler from 'express-async-handler'
-import { async } from 'regenerator-runtime'
-const router = express.Router()
 import Product from '../models/productModel.js'
+
+const router = express.Router()
 
 // @desc    Fetch all products
 // @route   GET /api/products
