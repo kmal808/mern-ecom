@@ -13,7 +13,7 @@ import {
   ListGroupItem,
 } from 'react-bootstrap'
 import Message from '../components/Message'
-import { addToCart } from '../actions/cartActions'
+import { addToCart, removeFromCart } from '../actions/cartActions'
 
 const CartScreen = () => {
   const { id } = useParams()
@@ -37,11 +37,12 @@ const CartScreen = () => {
   }, [dispatch, id, qty])
 
   const removeFromCartHandler = (id) => {
-    console.log('remove')
+    dispatch(removeFromCart(id))
+    navigate('/cart')
   }
 
   const checkoutHandler = () => {
-    navigate(`/login?redirect=shipping`)
+    navigate(`/login/?redirect=/shipping`)
   }
 
   return (
@@ -55,7 +56,7 @@ const CartScreen = () => {
         ) : (
           <ListGroup variant='flush'>
             {cartItems.map((item) => (
-              <ListGroupItem>
+              <ListGroupItem key={item.product}>
                 <Row>
                   <Col md={2}>
                     <Image src={item.image} alt={item.name} fluid rounded />
