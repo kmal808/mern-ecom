@@ -3,6 +3,7 @@ import {
 	Link,
 	useLocation,
 	useNavigate,
+	useParams,
 	useSearchParams,
 } from 'react-router-dom'
 import { Form, Button, Row, Col } from 'react-bootstrap'
@@ -11,7 +12,6 @@ import Message from '../components/Message'
 import Loader from '../components/Loader'
 import FormContainer from '../components/FormContainer'
 import { login } from '../actions/userAction'
-import { red } from 'colors'
 
 const LoginScreen = () => {
 	const [email, setEmail] = useState('')
@@ -23,10 +23,13 @@ const LoginScreen = () => {
 	const userLogin = useSelector((state) => state.userLogin)
 	const { loading, error, userInfo } = userLogin
 
-	const [searchParams] = useSearchParams()
-	const redirect = [...searchParams].length > 0 ? [...searchParams][0][1] : '/'
-	const { search } = useLocation()
-	const redirectInUrl = new URLSearchParams(search).get('querystringkey')
+	const params = useParams()
+	const redirect = params.search ? params.search : '/'
+
+	// const [searchParams] = useSearchParams()
+	// const redirect = [...searchParams].length > 0 ? [...searchParams][0][1] : '/'
+	// const { search } = useLocation()
+	// const redirectInUrl = new URLSearchParams(search).get('querystringkey')
 
 	useEffect(() => {
 		if (userInfo) {
@@ -60,7 +63,7 @@ const LoginScreen = () => {
 					<Form.Control
 						type='password'
 						placeholder='Password'
-						value={email}
+						value={password}
 						onChange={(e) => setPassword(e.target.value)}
 					></Form.Control>
 				</Form.Group>
@@ -72,9 +75,9 @@ const LoginScreen = () => {
 			<Row className='py-3'>
 				<Col>
 					New Customer?
-					<Link
-						to={redirect ? `/register?redirect=${redirect}` : '/register'}
-					></Link>
+					<Link to={redirect ? `/register?redirect=${redirect}` : '/register'}>
+						Register
+					</Link>
 				</Col>
 			</Row>
 		</FormContainer>
