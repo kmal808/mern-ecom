@@ -9,6 +9,7 @@ import {
 	userDetailsReducer,
 	userLoginReducer,
 	userRegisterReducer,
+	userUpdateProfileReducer,
 } from './reducers/userReducers'
 
 const cartItemsFromStorage = localStorage.getItem('cartItems')
@@ -30,6 +31,7 @@ const reducer = {
 	userLogin: userLoginReducer,
 	userRegister: userRegisterReducer,
 	userDetails: userDetailsReducer,
+	userUpdateProfile: userUpdateProfileReducer,
 }
 const middleware = [thunk]
 
