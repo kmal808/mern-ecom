@@ -18,7 +18,7 @@ const LoginScreen = () => {
 	const { loading, error, userInfo } = userLogin
 
 	const params = useParams()
-	const redirect = params.search ? params.search : '/'
+	const redirect = params.search ? '/' + params.search.split('=')[1] : '/'
 
 	// const [searchParams] = useSearchParams()
 	// const redirect = [...searchParams].length > 0 ? [...searchParams][0][1] : '/'
