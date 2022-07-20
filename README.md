@@ -1,3 +1,3 @@
 # mern-ecom
 
-WIP :crane Ecommerce site built using the MERN stack.
+WIP 🏗️ Ecommerce site built using the MERN stack.
