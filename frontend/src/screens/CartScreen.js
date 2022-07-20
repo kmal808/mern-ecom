@@ -70,7 +70,11 @@ const CartScreen = () => {
 	}
 
 	const checkoutHandler = () => {
-		navigate('/login?redirect=/shipping')
+		if (localStorage.getItem('userInfo')) {
+			navigate('/shipping')
+		} else {
+			navigate('/login')
+		}
 	}
 
 	return (
