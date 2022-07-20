@@ -26,8 +26,6 @@ const ProfileScreen = () => {
 	const userUpdateProfile = useSelector((state) => state.userUpdateProfile)
 	const { success } = userUpdateProfile
 
-	// const params = useParams()
-
 	useEffect(() => {
 		if (!userInfo) {
 			navigate('/login')

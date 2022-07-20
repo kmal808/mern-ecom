@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react'
-import { Link, useParams } from 'react-router-dom'
-import { useNavigate, useLocation } from 'react-router-dom'
+import { Link, useParams, useLocation, useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import {
 	Row,
@@ -16,25 +15,54 @@ import Message from '../components/Message'
 import { addToCart, removeFromCart } from '../actions/cartActions'
 
 const CartScreen = () => {
-	const { id } = useParams()
+	// const { id } = useParams()
 
-	const navigate = useNavigate()
+	// const navigate = useNavigate()
+
+	// const location = useLocation()
+
+	// const qty = location.search ? Number(location.search.split('=')[1]) : 1
+
+	// const dispatch = useDispatch()
+
+	// const cart = useSelector((state) => state.cart)
+
+	// const { cartItems } = cart
+
+	// useEffect(() => {
+	// 	if (id) {
+	// 		dispatch(addToCart(id, qty))
+	// 	}
+	// }, [dispatch, id, qty])
+
+	// const removeFromCartHandler = (id) => {
+	// 	dispatch(removeFromCart(id))
+	// 	navigate('/cart')
+	// }
+
+	// const checkoutHandler = () => {
+	// 	navigate('/login?redirect=shipping')
+	// }
+
+	const { id } = useParams()
+	const productId = id
 
 	const location = useLocation()
-
-	const qty = location.search ? Number(location.search.split('=')[1]) : 1
+	const qty = new URLSearchParams(location.search).get('qty')
 
 	const dispatch = useDispatch()
 
 	const cart = useSelector((state) => state.cart)
-
 	const { cartItems } = cart
 
+	const navigate = useNavigate()
+
 	useEffect(() => {
-		if (id) {
-			dispatch(addToCart(id, qty))
+		if (productId) {
+			dispatch(addToCart(productId, qty))
+			navigate('/cart')
 		}
-	}, [dispatch, id, qty])
+	}, [dispatch, productId, qty, navigate])
 
 	const removeFromCartHandler = (id) => {
 		dispatch(removeFromCart(id))
@@ -42,7 +70,7 @@ const CartScreen = () => {
 	}
 
 	const checkoutHandler = () => {
-		navigate('/login?:redirect=/shipping')
+		navigate('/login?redirect=/shipping')
 	}
 
 	return (
