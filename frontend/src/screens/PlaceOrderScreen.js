@@ -9,7 +9,7 @@ import {
 	Accordion,
 } from 'react-bootstrap'
 import { useSelector } from 'react-redux'
-
+import { FaShippingFast, FaMoneyBillWave, FaListAlt } from 'react-icons/fa'
 import CheckoutSteps from '../components/CheckoutSteps'
 import Message from '../components/Message'
 import { Link } from 'react-router-dom'
@@ -50,7 +50,9 @@ export const PlaceOrderScreen = () => {
 				<Col md={8}>
 					<ListGroup variant='flush'>
 						<ListGroup.Item>
-							<h2>Shipping Details</h2>
+							<h2>
+								Shipping Details <FaShippingFast />
+							</h2>
 							<br />
 							<p>
 								<strong>Address: </strong>
@@ -71,14 +73,18 @@ export const PlaceOrderScreen = () => {
 						</ListGroup.Item>
 						<br />
 						<ListGroup.Item>
-							<h2>Payment Method</h2>
+							<h2>
+								Payment Method <FaMoneyBillWave />
+							</h2>
 							<br />
 							<strong>Method: </strong>
 							{cart.paymentMethod}
 						</ListGroup.Item>
 						<br />
 						<ListGroup.Item>
-							<h2>Items</h2>
+							<h2>
+								Items <FaListAlt />
+							</h2>
 							<br />
 							{cart.cartItems.length === 0 ? (
 								<Message>Your Cart Is Empty</Message>

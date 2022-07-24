@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react'
 import { Link, useParams, useLocation, useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
+import { FaRegHeart, FaRegTrashAlt } from 'react-icons/fa'
 import {
 	Row,
 	Col,
@@ -15,35 +16,6 @@ import Message from '../components/Message'
 import { addToCart, removeFromCart } from '../actions/cartActions'
 
 const CartScreen = () => {
-	// const { id } = useParams()
-
-	// const navigate = useNavigate()
-
-	// const location = useLocation()
-
-	// const qty = location.search ? Number(location.search.split('=')[1]) : 1
-
-	// const dispatch = useDispatch()
-
-	// const cart = useSelector((state) => state.cart)
-
-	// const { cartItems } = cart
-
-	// useEffect(() => {
-	// 	if (id) {
-	// 		dispatch(addToCart(id, qty))
-	// 	}
-	// }, [dispatch, id, qty])
-
-	// const removeFromCartHandler = (id) => {
-	// 	dispatch(removeFromCart(id))
-	// 	navigate('/cart')
-	// }
-
-	// const checkoutHandler = () => {
-	// 	navigate('/login?redirect=shipping')
-	// }
-
 	const { id } = useParams()
 	const productId = id
 
@@ -83,7 +55,10 @@ const CartScreen = () => {
 				<h1>Shopping Cart</h1>
 				{cartItems.length === 0 ? (
 					<Message>
-						Your cart is empty <Link to='/'>Go Back</Link>
+						Your cart is empty{' '}
+						<Link to='/'>
+							Browse For Products <FaRegHeart color='red' />
+						</Link>
 					</Message>
 				) : (
 					<ListGroup variant='flush'>
@@ -120,7 +95,7 @@ const CartScreen = () => {
 											variant='light'
 											onClick={() => removeFromCartHandler(item.product)}
 										>
-											<i className='fas fa-trash'></i>
+											<FaRegTrashAlt color='red' />
 										</Button>
 									</Col>
 								</Row>
