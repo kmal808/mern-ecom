@@ -1,13 +1,5 @@
 import React from 'react'
-import {
-	Button,
-	Row,
-	Col,
-	ListGroup,
-	Image,
-	Card,
-	Accordion,
-} from 'react-bootstrap'
+import { Button, Row, Col, ListGroup, Image, Card } from 'react-bootstrap'
 import { useSelector } from 'react-redux'
 import { FaShippingFast, FaMoneyBillWave, FaListAlt } from 'react-icons/fa'
 import CheckoutSteps from '../components/CheckoutSteps'
@@ -72,6 +64,7 @@ export const PlaceOrderScreen = () => {
 							</p>
 						</ListGroup.Item>
 						<br />
+
 						<ListGroup.Item>
 							<h2>
 								Payment Method <FaMoneyBillWave />
@@ -81,46 +74,39 @@ export const PlaceOrderScreen = () => {
 							{cart.paymentMethod}
 						</ListGroup.Item>
 						<br />
+
 						<ListGroup.Item>
 							<h2>
-								Items <FaListAlt />
+								Order Items <FaListAlt />
 							</h2>
 							<br />
 							{cart.cartItems.length === 0 ? (
 								<Message>Your Cart Is Empty</Message>
 							) : (
-								<Accordion flush>
-									<Accordion.Item>
-										<Accordion.Header>Review your order</Accordion.Header>
-										<Accordion.Body>
-											<ListGroup variant='flush'>
-												{cart.cartItems.map((item, index) => (
-													<ListGroup.Item key={index}>
-														<Row className='text-center'>
-															<Col md={1}>
-																<Image
-																	src={item.image}
-																	alt={item.name}
-																	fluid
-																	rounded
-																/>
-															</Col>
-															<Col>
-																<Link to={`/product/${item.product}`}>
-																	{item.name}
-																</Link>
-															</Col>
-															<Col md={4}>
-																{item.qty} x ${item.price} = $
-																{item.qty * item.price}
-															</Col>
-														</Row>
-													</ListGroup.Item>
-												))}
-											</ListGroup>
-										</Accordion.Body>
-									</Accordion.Item>
-								</Accordion>
+								<ListGroup variant='flush'>
+									{cart.cartItems.map((item, index) => (
+										<ListGroup.Item key={index}>
+											<Row className='text-center'>
+												<Col md={1}>
+													<Image
+														src={item.image}
+														alt={item.name}
+														fluid
+														rounded
+													/>
+												</Col>
+												<Col>
+													<Link to={`/product/${item.product}`}>
+														{item.name}
+													</Link>
+												</Col>
+												<Col md={4}>
+													{item.qty} x ${item.price} = ${item.qty * item.price}
+												</Col>
+											</Row>
+										</ListGroup.Item>
+									))}
+								</ListGroup>
 							)}
 						</ListGroup.Item>
 					</ListGroup>
