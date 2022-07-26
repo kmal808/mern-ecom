@@ -1,13 +1,16 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Button, Row, Col, ListGroup, Image, Card } from 'react-bootstrap'
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 import { FaShippingFast, FaMoneyBillWave, FaListAlt } from 'react-icons/fa'
 import CheckoutSteps from '../components/CheckoutSteps'
 import Message from '../components/Message'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
+import { createOrder } from '../actions/orderActions'
 
 export const PlaceOrderScreen = () => {
 	const cart = useSelector((state) => state.cart)
+	const dispatch = useDispatch()
+	const navigate = useNavigate()
 
 	//* calculate prices
 	const addDecimals = (num) => {
@@ -31,8 +34,28 @@ export const PlaceOrderScreen = () => {
 		Number(cart.taxPrice)
 	).toFixed(2)
 
-	const placeOrderHandler = (e) => {
-		e.preventDefault()
+	const orderCreate = useSelector((state) => state.orderCreate)
+	const { order, success, error } = orderCreate
+
+	useEffect(() => {
+		if (success) {
+			navigate(`/order/${order._id}`)
+		}
+		// eslint-disble-next-line
+	}, [success, navigate])
+
+	const placeOrderHandler = () => {
+		dispatch(
+			createOrder({
+				orderItems: cartItems,
+				shippingAddress: cart.cartItems,
+				paymentMethod: cart.paymentMethod,
+				itemsPrice: cart.itemsPrice,
+				shippingPrice: cart.shippingPrice,
+				taxPrice: cart.taxPrice,
+				totalPrice: cart.totalPrice,
+			})
+		)
 	}
 
 	return (
@@ -140,6 +163,9 @@ export const PlaceOrderScreen = () => {
 									<Col>Total:</Col>
 									<Col>$ {cart.totalPrice}</Col>
 								</Row>
+							</ListGroup.Item>
+							<ListGroup.Item>
+								{error && <Message variant='danger'>{error}</Message>}
 							</ListGroup.Item>
 							<ListGroup.Item>
 								<Row>
