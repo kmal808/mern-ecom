@@ -48,7 +48,7 @@ export const PlaceOrderScreen = () => {
 		dispatch(
 			createOrder({
 				orderItems: cart.orderItems,
-				shippingAddress: cart.cartItems,
+				shippingAddress: cart.shippingAddress,
 				paymentMethod: cart.paymentMethod,
 				itemsPrice: cart.itemsPrice,
 				shippingPrice: cart.shippingPrice,
