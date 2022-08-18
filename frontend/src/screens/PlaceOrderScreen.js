@@ -42,7 +42,7 @@ export const PlaceOrderScreen = () => {
 			navigate(`/order/${order._id}`)
 		}
 		// eslint-disble-next-line
-	}, [success, navigate])
+	}, [success, navigate, order._id])
 
 	const placeOrderHandler = () => {
 		dispatch(
@@ -185,3 +185,5 @@ export const PlaceOrderScreen = () => {
 		</>
 	)
 }
+
+export default PlaceOrderScreen
