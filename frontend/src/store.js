@@ -14,6 +14,7 @@ import {
 import {
 	orderCreateReducer,
 	orderDetailsReducer,
+	orderPayReducer,
 } from './reducers/orderReducers'
 
 const cartItemsFromStorage = localStorage.getItem('cartItems')
@@ -50,6 +51,7 @@ const reducer = {
 	userUpdateProfile: userUpdateProfileReducer,
 	orderCreate: orderCreateReducer,
 	orderDetails: orderDetailsReducer,
+	orderPayReducer: orderPayReducer,
 }
 const middleware = [thunk]
 
