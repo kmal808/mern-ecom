@@ -51,7 +51,7 @@ const reducer = {
 	userUpdateProfile: userUpdateProfileReducer,
 	orderCreate: orderCreateReducer,
 	orderDetails: orderDetailsReducer,
-	orderPayReducer: orderPayReducer,
+	orderPay: orderPayReducer,
 }
 const middleware = [thunk]
 
