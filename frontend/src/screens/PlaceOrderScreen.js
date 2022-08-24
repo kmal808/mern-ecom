@@ -8,41 +8,43 @@ import { Link, useNavigate } from 'react-router-dom'
 import { createOrder } from '../actions/orderActions'
 
 export const PlaceOrderScreen = () => {
-	const cart = useSelector((state) => state.cart)
-	const dispatch = useDispatch()
-	const navigate = useNavigate()
-
-	//* calculate prices
-	const addDecimals = (num) => {
-		return (Math.round(num * 100) / 100).toFixed(2)
-	}
-
-	cart.itemsPrice = addDecimals(
-		cart.cartItems.reduce((a, i) => a + i.price * i.qty, 0)
-	)
-
-	//* shipping
-	cart.shippingPrice = addDecimals(cart.itemsPrice > 100 ? 0 : 10)
-
-	//* tax
-	cart.taxPrice = addDecimals(Number((0.15 * cart.itemsPrice).toFixed(2)))
-
-	//* total
-	cart.totalPrice = (
-		Number(cart.itemsPrice) +
-		Number(cart.shippingPrice) +
-		Number(cart.taxPrice)
-	).toFixed(2)
-
 	const orderCreate = useSelector((state) => state.orderCreate)
 	const { order, success, error } = orderCreate
+
+	const navigate = useNavigate()
+
+	const cart = useSelector((state) => state.cart)
 
 	useEffect(() => {
 		if (success) {
 			navigate(`/order/${order._id}`)
 		}
 		// eslint-disble-next-line
-	}, [success, navigate, order._id])
+	}, [success, navigate])
+
+	const dispatch = useDispatch()
+
+	//calculate prices
+	const addDecimals = (num) => {
+		return (Math.round(num * 100) / 100).toFixed(2)
+	}
+
+	cart.itemsPrice = addDecimals(
+		cart.cartItems.reduce((acc, item) => acc + item.price * item.qty, 0)
+	)
+
+	//shipping
+	cart.shippingPrice = addDecimals(cart.itemsPrice > 100 ? 0 : 10)
+
+	//tax
+	cart.taxPrice = addDecimals(Number((0.15 * cart.itemsPrice).toFixed(2)))
+
+	//total payable
+	cart.totalPrice = (
+		Number(cart.itemsPrice) +
+		Number(cart.shippingPrice) +
+		Number(cart.taxPrice)
+	).toFixed(2)
 
 	const placeOrderHandler = () => {
 		dispatch(
