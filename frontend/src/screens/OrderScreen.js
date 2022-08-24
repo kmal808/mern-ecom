@@ -13,6 +13,7 @@ import { ORDER_PAY_RESET } from '../constants/orderConstants'
 export const OrderScreen = () => {
 	const { id } = useParams()
 	const [sdkReady, setSdkReady] = useState(false)
+
 	const dispatch = useDispatch()
 
 	const orderDetails = useSelector((state) => state.orderDetails)
