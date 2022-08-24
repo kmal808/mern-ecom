@@ -11,11 +11,15 @@ import {
 	ORDER_PAY_RESET,
 } from '../constants/orderConstants'
 
-export const orderCreateReducer = (state = {}, action) => {
+export const orderCreateReducer = (
+	state = { order: null, success: false },
+	action
+) => {
 	switch (action.type) {
 		case ORDER_CREATE_REQUEST:
 			return {
 				loading: true,
+				success: false,
 			}
 		case ORDER_CREATE_SUCCESS:
 			return {
@@ -27,12 +31,13 @@ export const orderCreateReducer = (state = {}, action) => {
 			return {
 				loading: false,
 				error: action.payload,
+				success: false,
 			}
+
 		default:
 			return state
 	}
 }
-
 export const orderDetailsReducer = (
 	state = { loading: true, orderItems: [], shippingAddress: {} },
 	action
