@@ -59,7 +59,7 @@ export const OrderScreen = () => {
 			document.body.appendChild(script)
 		}
 
-		if (!order || successPay) {
+		if (!order || successPay || order._id !== id) {
 			dispatch({ type: ORDER_PAY_RESET })
 			dispatch(getOrderDetails(id))
 		} else if (!order.isPaid) {
