@@ -7,13 +7,13 @@ import Loader from '../components/Loader'
 import { listUsers } from '../actions/userAction'
 
 const UserListScreen = () => {
-	const dispatch = useDispatch
+	const dispatch = useDispatch()
 
 	const userList = useSelector((state) => state.userList)
 	const { loading, error, users } = userList
 
 	useEffect(() => {
-		dispatch(listUsers)
+		dispatch(listUsers())
 	}, [dispatch])
 
 	const deleteHandler = (id) => {
