@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react'
-
 import { Link, useParams, useNavigate } from 'react-router-dom'
 import { Form, Button } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
@@ -9,8 +8,7 @@ import FormContainer from '../components/FormContainer'
 import { getUserDetails } from '../actions/userAction'
 
 const UserEditScreen = () => {
-	const params = useParams()
-	const userID = match.params.id
+	const { id: userId } = useParams()
 	const [name, setName] = useState('')
 	const [email, setEmail] = useState('')
 	const [isAdmin, setIsAdmin] = useState(false)
