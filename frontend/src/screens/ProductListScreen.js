@@ -31,6 +31,10 @@ const ProductListScreen = () => {
 		}
 	}
 
+	const createProductHandler = (product) => {
+		//todo CREATE PRODUCT
+	}
+
 	return (
 		<>
 			<Row className='align-items-center'>
