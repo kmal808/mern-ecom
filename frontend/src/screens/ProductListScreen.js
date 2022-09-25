@@ -26,7 +26,7 @@ const ProductListScreen = () => {
 		success: successDelete,
 	} = productDelete
 
-	const productCreate = useSelector((state) => state.productDelete)
+	const productCreate = useSelector((state) => state.productCreate)
 	const {
 		loading: loadingCreate,
 		error: errorCreate,
@@ -64,7 +64,7 @@ const ProductListScreen = () => {
 		}
 	}
 
-	const createProductHandler = () => {
+	const createProductHandler = (product) => {
 		dispatch(createProduct())
 	}
 
