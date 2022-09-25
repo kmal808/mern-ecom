@@ -5,7 +5,8 @@ import { useDispatch, useSelector } from 'react-redux'
 import Message from '../components/Message'
 import Loader from '../components/Loader'
 import FormContainer from '../components/FormContainer'
-import { listProductDetails } from '../actions/productAction'
+import { listProductDetails, updateProduct } from '../actions/productActions'
+import { PRODUCT_UPDATE_RESET } from '../constants/productConstants'
 
 const ProductEditScreen = () => {
 	const { id: productId } = useParams()
@@ -23,23 +24,46 @@ const ProductEditScreen = () => {
 	const productDetails = useSelector((state) => state.productDetails)
 	const { loading, error, product } = productDetails
 
+	const productUpdate = useSelector((state) => state.productUpdate)
+	const {
+		loading: loadingUpdate,
+		error: errorUpdate,
+		success: successUpdate,
+	} = productUpdate
+
 	useEffect(() => {
-		if (!product.name || product._id !== productId) {
-			dispatch(listProductDetails(productId))
+		if (successUpdate) {
+			dispatch({ type: PRODUCT_UPDATE_RESET })
+			navigate('/admin/productlist')
 		} else {
-			setName(product.name)
-			setPrice(product.price)
-			setImage(product.image)
-			setBrand(product.brand)
-			setCategory(product.category)
-			setCountInStock(product.countInStock)
-			setDescription(product.description)
+			if (!product.name || product._id !== productId) {
+				dispatch(listProductDetails(productId))
+			} else {
+				setName(product.name)
+				setPrice(product.price)
+				setImage(product.image)
+				setBrand(product.brand)
+				setCategory(product.category)
+				setCountInStock(product.countInStock)
+				setDescription(product.description)
+			}
 		}
-	}, [product, dispatch, navigate, productId])
+	}, [product, dispatch, navigate, productId, successUpdate])
 
 	const submitHandler = (e) => {
 		e.preventDefault()
-		//todo update product
+		dispatch(
+			updateProduct({
+				_id: productId,
+				name,
+				price,
+				image,
+				brand,
+				category,
+				description,
+				countInStock,
+			})
+		)
 	}
 
 	return (
@@ -49,6 +73,8 @@ const ProductEditScreen = () => {
 			</Link>
 			<FormContainer>
 				<h1>Edit Product</h1>
+				{loadingUpdate && <Loader />}
+				{errorUpdate && <Message variant='danger'>{errorUpdate}</Message>}
 				{loading ? (
 					<Loader />
 				) : error ? (
@@ -76,52 +102,56 @@ const ProductEditScreen = () => {
 						</Form.Group>
 
 						<Form.Group controlId='image'>
-							<Form.Check
+							<Form.Label>Image</Form.Label>
+							<Form.Control
 								type='text'
 								placeholder='Enter image url'
 								value={image}
-								onChange={(e) => setImage(e.target.checked)}
-							></Form.Check>
+								onChange={(e) => setImage(e.target.value)}
+							></Form.Control>
 						</Form.Group>
 
 						<Form.Group controlId='brand'>
-							<Form.Check
+							<Form.Label>Brand</Form.Label>
+							<Form.Control
 								type='text'
 								placeholder='Enter brand'
 								value={brand}
-								onChange={(e) => setBrand(e.target.checked)}
-							></Form.Check>
+								onChange={(e) => setBrand(e.target.value)}
+							></Form.Control>
 						</Form.Group>
 
 						<Form.Group controlId='countInStock'>
 							<Form.Label>Count In Stock</Form.Label>
 							<Form.Control
 								type='number'
-								placeholder='Enter count in stock'
+								placeholder='Enter countInStock'
 								value={countInStock}
 								onChange={(e) => setCountInStock(e.target.value)}
 							></Form.Control>
 						</Form.Group>
 
 						<Form.Group controlId='category'>
-							<Form.Check
+							<Form.Label>Category</Form.Label>
+							<Form.Control
 								type='text'
 								placeholder='Enter category'
 								value={category}
-								onChange={(e) => setCategory(e.target.checked)}
-							></Form.Check>
+								onChange={(e) => setCategory(e.target.value)}
+							></Form.Control>
 						</Form.Group>
 
 						<Form.Group controlId='description'>
-							<Form.Check
+							<Form.Label>Description</Form.Label>
+							<Form.Control
 								type='text'
 								placeholder='Enter description'
 								value={description}
-								onChange={(e) => setDescription(e.target.checked)}
-							></Form.Check>
+								onChange={(e) => setDescription(e.target.value)}
+							></Form.Control>
 						</Form.Group>
 
-						<Button className='mt-3' type='submit' variant='primary'>
+						<Button type='submit' variant='primary'>
 							Update
 						</Button>
 					</Form>
